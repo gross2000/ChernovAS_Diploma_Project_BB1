@@ -1,16 +1,36 @@
-# Функционал выгрузки полученных результатов в CSV
+"""Функционал выгрузки полученных результатов в CSV"""
+from abc import ABC, abstractmethod
 import pandas as pd
-from src.web_scraper import Scraper
 
 
-site = "https://goldapple.ru/parfjumerija"
+class Filesaver(ABC):
 
-scraper = Scraper(site, 1)
-scraper.scrape()
-data = scraper.get_data()
+    def __init__(self, filename):
+        self.filename = filename
 
-# Создание DataFrame из данных
-df = pd.DataFrame(data)
+    @abstractmethod
+    def write_data(self, data):
+        pass
 
-#Сохранение DataFrame в CSV-файл
-df.to_csv('results.csv', index=False)
+    @abstractmethod
+    def del_data(self):
+        pass
+
+
+class CSVSaver(Filesaver):
+    """"Класс для записи в csv-файл"""
+
+    def __init__(self, filename = 'results.csv'):
+        super().__init__(filename)
+
+
+    def write_data(self, data):
+        """ Запись данных в csv """
+        df = pd.DataFrame(data)
+        df.to_csv(self.filename, index = False)
+
+
+    def del_data(self):
+        """ Удаление данных из файла """
+        with open(self.filename, 'w') as f:
+            f.truncate(0)

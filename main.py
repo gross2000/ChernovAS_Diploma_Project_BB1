@@ -1,7 +1,8 @@
-from utils import Scraper
+from utils.utils import scrapnwrite
+from utils.utils import waste_csv
 
-site = "https://goldapple.ru/parfjumerija"
+# вызов скрапинга
+scrapnwrite()
 
-
-scraper = Scraper(site, 1)
-scraper.scrape()
+# удаление данных CSV
+# waste_csv()

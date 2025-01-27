@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import urllib.request
 from urllib.error import URLError, HTTPError
+from loguru import logger
 
 class Scraper():
     """Класс для веб-скрапинга"""
@@ -18,7 +19,6 @@ class Scraper():
                     'manual': [],
                     'country': []
                     }
-    logger.add("scraper.log", rotation="1 MB", level="DEBUG", backtrace=True, diagnose=True)
 
     def scrape(self):
         """Стартовый скрапинг стартовой страницы сайта"""
